@@ -116,3 +116,93 @@ if (localStorage.getItem("hasReturned")) {
 } else {
   localStorage.setItem("hasReturned", true);
 }
+
+// ==== FIRE PARTICLES ====
+const canvas = document.getElementById("fireCanvas");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+function createParticle(x, y) {
+  particles.push({
+    x: x || Math.random() * canvas.width,
+    y: y || canvas.height,
+    size: Math.random() * 4 + 1,
+    speedY: Math.random() * -1.5 - 0.5,
+    color: "rgba(" + (200 + Math.floor(Math.random()*55)) + ", " + Math.floor(Math.random()*100) + ", 0, 0.8)"
+  });
+}
+
+function handleParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach((p, i) => {
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fillStyle = p.color;
+    ctx.fill();
+    p.y += p.speedY;
+    p.size *= 0.97;
+    if (p.size < 0.5) particles.splice(i, 1);
+  });
+}
+
+function animateFire() {
+  handleParticles();
+  requestAnimationFrame(animateFire);
+}
+
+window.addEventListener("resize", () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+
+// Start fire after 90 clicks
+function triggerFireEffect() {
+  setInterval(() => {
+    for (let i = 0; i < 5; i++) createParticle();
+  }, 100);
+  animateFire();
+
+  // Flicker all text
+  document.querySelectorAll("p, h1, h2, h3, span, div").forEach(el => {
+    el.classList.add("flicker-text");
+  });
+
+  // Hover bursts
+  document.body.addEventListener("mousemove", (e) => {
+    for (let i = 0; i < 3; i++) createParticle(e.clientX + Math.random()*10, e.clientY + Math.random()*10);
+  });
+}
+
+let fireStarted = false;
+document.addEventListener("click", () => {
+  if (clickCount >= 90 && !fireStarted) {
+    fireStarted = true;
+    triggerFireEffect();
+  }
+});
+
+// === BURN HOLES ON IMAGE ===
+function burnHole(x, y) {
+  for (let r = 5; r < 20; r += 2) {
+    ctx.save();
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+}
+
+// Create random holes over time near bottom half
+setInterval(() => {
+  if (fireStarted) {
+    for (let i = 0; i < 2; i++) {
+      const bx = Math.random() * canvas.width;
+      const by = canvas.height * 0.7 + Math.random() * (canvas.height * 0.3);
+      burnHole(bx, by);
+    }
+  }
+}, 700);

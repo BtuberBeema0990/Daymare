@@ -125,3 +125,22 @@ bodybody.cursed * {
   transition: opacity 0.5s;
   z-index: 10000;
 }
+
+#fireCanvas {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 10001;
+}
+
+.flicker-text {
+  animation: flicker 0.3s infinite alternate;
+}
+
+@keyframes flicker {
+  0% { opacity: 1; }
+  100% { opacity: 0.4; transform: translateX(1px); }
+}
