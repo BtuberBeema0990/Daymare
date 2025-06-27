@@ -10,8 +10,8 @@ const fire = document.getElementById("fireOverlay");
 const hour = new Date().getHours();
 let clickCount = 0;
 
-const imageDay = "https://i.imgur.com/YOUR_DAY_IMAGE.png";
-const imageNight = "https://i.imgur.com/YOUR_NIGHT_IMAGE.png";
+const imageDay = "https://i.imgur.com/ltKIADI.jpeg";
+const imageNight = "https://i.imgur.com/VvbH0gk.jpeg";
 img.src = (hour >= 6 && hour < 17) ? imageDay : imageNight;
 
 const glitchPhrases = [
