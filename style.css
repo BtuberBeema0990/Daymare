@@ -103,11 +103,11 @@ body.hide-cursor {
   display: none;
 }
 
-body.cursed {
+bodybody.cursed {
   filter: contrast(1.2) brightness(0.9) hue-rotate(5deg) blur(0.5px);
   animation: tremor 0.2s infinite alternate;
 }
-body.cursed * {
+bodybody.cursed * {
   pointer-events: none;
 }
 @keyframes tremor {

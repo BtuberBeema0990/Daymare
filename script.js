@@ -42,7 +42,7 @@ img.addEventListener("click", () => {
   if (clickCount === 66) laugh.play();
   if (clickCount === 70) document.body.classList.add("hide-cursor");
   if (clickCount === 85) modal.classList.remove("hidden");
-  if (clickCount === 90) document.body.classList.add("cursed");
+  if (clickCount === 90) document.bodydocument.body.classList.add("cursed");
   if (clickCount === 95) fire.style.opacity = "0.85";
 
   if (clickCount >= 91 && clickCount <= 99) {
